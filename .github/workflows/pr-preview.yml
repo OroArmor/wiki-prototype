@@ -33,14 +33,13 @@ jobs:
         run: |
           ./gradlew generateWiki -Pwiki_path=https://wiki-prototype.oroarmor.com/pr-preview/pr-${{ github.event.number }}/
 
-
-    - uses: rossjrw/pr-preview-action@v1
-      if: contains(['opened', 'reopened', 'synchronize'], github.event.action)
-      with:
-        source-dir: ./docs/
-        action: deploy
-    - uses: rossjrw/pr-preview-action@v1
-      if: github.event.action == "closed" && !github.event.pull_request.merged
-      with:
-        source-dir: ./docs/
-        action: remove
+      - uses: rossjrw/pr-preview-action@v1
+        if: contains(['opened', 'reopened', 'synchronize'], github.event.action)
+        with:
+          source-dir: ./docs/
+          action: deploy
+      - uses: rossjrw/pr-preview-action@v1
+        if: github.event.action == "closed" && !github.event.pull_request.merged
+        with:
+          source-dir: ./docs/
+          action: remove
