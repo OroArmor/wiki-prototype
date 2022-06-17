@@ -31,7 +31,7 @@ jobs:
 
       - name: Generate wiki 🔧
         run: |
-          ./gradlew generateWiki -Pwiki_path=https://modder.wiki.quiltmc.org/pr-preview/pr-${{ github.event.number }}/
+          ./gradlew generateWiki -Pwiki_path=https://wiki-prototype.oroarmor.com/pr-preview/pr-${{ github.event.number }}/
 
 
     - uses: rossjrw/pr-preview-action@v1

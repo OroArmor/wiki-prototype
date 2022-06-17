@@ -27,7 +27,7 @@ jobs:
 
       - name: Generate wiki 🔧
         run: |
-          ./gradlew generateWiki -Pwiki_path=https://modder.wiki.quiltmc.org
+          ./gradlew generateWiki -Pwiki_path=https://wiki-prototype.oroarmor.com
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.3.3
