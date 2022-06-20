@@ -7,6 +7,25 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css">
     <link rel="stylesheet" href="https://quiltmc.org/assets/css/style.css">
     <link rel="stylesheet" href="https://wiki-prototype.oroarmor.com/dracula.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://quiltmc.org/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://quiltmc.org/favicon/favicon-16x16.png">
+    <link rel="shortcut icon" href="https://quiltmc.org/favicon/favicon.ico">
+
+    <meta property="og:title" content="Entity Attributes" />
+    <meta name="author" content="QuiltMC" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="description" content="The mod-loader that cares." />
+    <meta property="og:description" content="The mod-loader that cares." />
+    <link rel="canonical" href="https://wiki-prototype.oroarmor.com/versions/1.19/entity/entity_attributes" />
+    <meta property="og:url" content="https://wiki-prototype.oroarmor.com/versions/1.19/entity/entity_attributes" />
+    <meta property="og:site_name" content="Entity Attributes" />
+    <meta property="og:image" content="https://quiltmc.org/assets/img/logo-square.png" />
+    <meta name="twitter:card" content="summary" />
+    <meta property="twitter:image" content="https://quiltmc.org/assets/img/logo-square.png" />
+    <meta property="twitter:title" content="Entity Attributes" />
+    <meta name="twitter:site" content="@quilt_mc" />
+    <meta name="twitter:creator" content="@QuiltMC" />
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
     <script>hljs.highlightAll();</script>
     <style>
@@ -94,7 +113,7 @@
         <div class="box" data-sidebar-target="sidebar">
             <div class="menu">
                 <ul class="menu-list">
-                        <li><a href="https://wiki-prototype.oroarmor.com/versions/1.19">Minecraft Version 1.19</a></li>
+                        <li><a href="https://wiki-prototype.oroarmor.com/versions/1.19/">Minecraft Version 1.19</a></li>
     <li><a href="https://wiki-prototype.oroarmor.com/versions/1.19/data/">Data</a>
         <ul>
             <li><a href="https://wiki-prototype.oroarmor.com/versions/1.19/data/recipes/">Recipes</a>
@@ -104,7 +123,11 @@
             </li>
         </ul>
     </li>
-    <li><a href="https://wiki-prototype.oroarmor.com/versions/1.19/entity_attributes/">Entity Attributes</a></li>
+    <li><a href="https://wiki-prototype.oroarmor.com/versions/1.19/entity/">Entities</a>
+        <ul>
+            <li><a href="https://wiki-prototype.oroarmor.com/versions/1.19/entity/entity_attributes/">Entity Attributes</a></li>
+        </ul>
+    </li>
 </ul>
                 </ul>
             </div>
@@ -123,7 +146,7 @@
     <li>A 'fallback' value: the base value before any external attribute modifiers are applied</li>
     <li>A min and max value, clamping the <strong>end result</strong> of the modifier calculations (after all modifiers are applied)</li>
 </ul>
-<p>From <a href="https://github.com/QuiltMC/developer-wiki/tree/master/wiki/versions/1.19/entity_attributes/src/main/java/org/quiltmc/wiki/entity_attributes/AttributesExample.java" target="_blank"><code>AttributesExample.java</code></a>:</p>
+<p>From <a href="https://github.com/QuiltMC/developer-wiki/tree/master/wiki/versions/1.19/entity/entity_attributes/src/main/java/org/quiltmc/wiki/entity_attributes/AttributesExample.java" target="_blank"><code>AttributesExample.java</code></a>:</p>
 <pre><code class="language-java">// ...
 	public static final EntityAttribute GENERIC_JUMP_BOOST = new ClampedEntityAttribute(&quot;attribute.name.generic_jump_boost&quot;, 1.0, 0.0, 2.0).setTracked(true);
 // ...
@@ -136,7 +159,7 @@
 }
 </code></pre>
 <p>With our <code>EntityAttribute</code> instance created, we can go ahead and register it.</p>
-<p>From <a href="https://github.com/QuiltMC/developer-wiki/tree/master/wiki/versions/1.19/entity_attributes/src/main/java/org/quiltmc/wiki/entity_attributes/AttributesExample.java" target="_blank"><code>AttributesExample.java</code></a>:</p>
+<p>From <a href="https://github.com/QuiltMC/developer-wiki/tree/master/wiki/versions/1.19/entity/entity_attributes/src/main/java/org/quiltmc/wiki/entity_attributes/AttributesExample.java" target="_blank"><code>AttributesExample.java</code></a>:</p>
 <pre><code class="language-java">// ...
 		Registry.register(Registry.ATTRIBUTE, new Identifier(&quot;example&quot;, &quot;generic.jump_boost&quot;), GENERIC_JUMP_BOOST);
 // ...
@@ -175,7 +198,7 @@
 <h3><a href="#mixing-into-attribute-creation" id="mixing-into-attribute-creation">Mixing Into Attribute Creation</a></h3>
 <p>Each entity that does something different with attributes has their own attribute creation method, which you can find in <code>DefaultAttributeRegistry</code>. Since we want our attribute on all entities, we'll mix into the <code>LivingEntity.createLivingAttributes</code> method shown in the previous section.</p>
 <p>Remember, at this point, the builder is still mutable - and a reference - so our mixin is very straightforward.</p>
-<p>From <a href="https://github.com/QuiltMC/developer-wiki/tree/master/wiki/versions/1.19/entity_attributes/src/main/java/org/quiltmc/wiki/entity_attributes/mixin/LivingEntityMixin.java" target="_blank"><code>LivingEntityMixin.java</code></a>:</p>
+<p>From <a href="https://github.com/QuiltMC/developer-wiki/tree/master/wiki/versions/1.19/entity/entity_attributes/src/main/java/org/quiltmc/wiki/entity_attributes/mixin/LivingEntityMixin.java" target="_blank"><code>LivingEntityMixin.java</code></a>:</p>
 <pre><code class="language-java">// ...
 	@Inject(method = &quot;createLivingAttributes&quot;, at = @At(value = &quot;RETURN&quot;))
 	private static void addCustomAttribute(CallbackInfoReturnable&lt;DefaultAttributeContainer.Builder&gt; cir) {
@@ -187,7 +210,7 @@
 <p>We've registered our attribute and let all living entities know that they have it. The next step is to actually use it somewhere: in our case, to modify jump height.</p>
 <p><code>LivingEntity#getAttributes</code> gets the <em>possible</em> attributes that the entity knows it has, but not the actual values. Instead, each attribute has its own 'instance' on an entity known as an <code>EntityAttributeInstance</code>, which has all the logic for controlling attribute values. You can use the <code>LivingEntity#getAttributeInstance</code> method for getting one of these instances.</p>
 <p>We'll need another mixin into <code>LivingEntity</code>, this time for the <code>getJumpVelocity</code> method. Since our initial fallback value is <code>1.0</code>, we can feel free to just multiply the end result by the attribute value.</p>
-<p>From <a href="https://github.com/QuiltMC/developer-wiki/tree/master/wiki/versions/1.19/entity_attributes/src/main/java/org/quiltmc/wiki/entity_attributes/mixin/LivingEntityMixin.java" target="_blank"><code>LivingEntityMixin.java</code></a>:</p>
+<p>From <a href="https://github.com/QuiltMC/developer-wiki/tree/master/wiki/versions/1.19/entity/entity_attributes/src/main/java/org/quiltmc/wiki/entity_attributes/mixin/LivingEntityMixin.java" target="_blank"><code>LivingEntityMixin.java</code></a>:</p>
 <pre><code class="language-java">// ...
 	@Shadow @Nullable public abstract EntityAttributeInstance getAttributeInstance(EntityAttribute attribute);
 
@@ -210,7 +233,7 @@
     <li>A string representing the modifier's 'name' - only used for NBT and when <code>StatusEffect</code>s link to attributes, notably showing up in potion tooltips</li>
     <li>A double value and an <code>EntityAttributeModifier.Operation</code> that specifies how the modifier should be applied and by what magnitude</li>
 </ul>
-<p>From <a href="https://github.com/QuiltMC/developer-wiki/tree/master/wiki/versions/1.19/entity_attributes/src/main/java/org/quiltmc/wiki/entity_attributes/AttributesExample.java" target="_blank"><code>AttributesExample.java</code></a>:</p>
+<p>From <a href="https://github.com/QuiltMC/developer-wiki/tree/master/wiki/versions/1.19/entity/entity_attributes/src/main/java/org/quiltmc/wiki/entity_attributes/AttributesExample.java" target="_blank"><code>AttributesExample.java</code></a>:</p>
 <pre><code class="language-java">// ...
 	public static final UUID SOME_MODIFIER_ID = UUID.fromString(&quot;de17612a-adec-11ec-b909-0242ac120002&quot;);
 
@@ -227,14 +250,14 @@
 <p>The final step is to apply this modifier. These examples use the <code>SOME_MODIFIER</code> field created in the previous section.</p>
 <h3><a href="#via-code" id="via-code">Via Code</a></h3>
 <p>It's as simple as getting the attribute instance and calling <code>addTemporaryModifier</code> (or <code>addPersistentModifier</code> if you want it to be serialized in the instance's NBT).</p>
-<p>From <a href="https://github.com/QuiltMC/developer-wiki/tree/master/wiki/versions/1.19/entity_attributes/src/main/java/org/quiltmc/wiki/entity_attributes/JumpBoostCommand.java" target="_blank"><code>JumpBoostCommand.java</code></a>:</p>
+<p>From <a href="https://github.com/QuiltMC/developer-wiki/tree/master/wiki/versions/1.19/entity/entity_attributes/src/main/java/org/quiltmc/wiki/entity_attributes/JumpBoostCommand.java" target="_blank"><code>JumpBoostCommand.java</code></a>:</p>
 <pre><code class="language-java">// ...
 		EntityAttributeInstance instance = player.getAttributeInstance(AttributesExample.GENERIC_JUMP_BOOST);
 		instance.addTemporaryModifier(AttributesExample.SOME_MODIFIER);
 // ...
 </code></pre>
 <p>This is also the most appropriate case where you would remove the modifier at some other point in time. You can either use the UUID associated with the modifier or the modifier itself.</p>
-<p>From <a href="https://github.com/QuiltMC/developer-wiki/tree/master/wiki/versions/1.19/entity_attributes/src/main/java/org/quiltmc/wiki/entity_attributes/JumpBoostCommand.java" target="_blank"><code>JumpBoostCommand.java</code></a>:</p>
+<p>From <a href="https://github.com/QuiltMC/developer-wiki/tree/master/wiki/versions/1.19/entity/entity_attributes/src/main/java/org/quiltmc/wiki/entity_attributes/JumpBoostCommand.java" target="_blank"><code>JumpBoostCommand.java</code></a>:</p>
 <pre><code class="language-java">// ...
 		instance.removeModifier(AttributesExample.SOME_MODIFIER_ID);
 // ...
@@ -243,7 +266,7 @@
 <p>Upon equipping an item, the game checks if it has any attribute modifiers marked in the slot it was equipped in. If so, it applies those modifiers to the entity. There are two ways items can achieve this: through <code>ItemStack</code> NBT or custom <code>Item</code> instance behavior.</p>
 <h4><a href="#nbt" id="nbt">NBT</a></h4>
 <p>You can use the <code>ItemStack#addAttributeModifier</code> method to apply a modifier via NBT.</p>
-<p>From <a href="https://github.com/QuiltMC/developer-wiki/tree/master/wiki/versions/1.19/entity_attributes/src/main/java/org/quiltmc/wiki/entity_attributes/JumpBoostCommand.java" target="_blank"><code>JumpBoostCommand.java</code></a>:</p>
+<p>From <a href="https://github.com/QuiltMC/developer-wiki/tree/master/wiki/versions/1.19/entity/entity_attributes/src/main/java/org/quiltmc/wiki/entity_attributes/JumpBoostCommand.java" target="_blank"><code>JumpBoostCommand.java</code></a>:</p>
 <pre><code class="language-java">// ...
 		ItemStack stack = new ItemStack(Items.STICK);
 		stack.addAttributeModifier(
@@ -255,7 +278,7 @@
 </code></pre>
 <h4><a href="#hard-coded" id="hard-coded">Hard-coded</a></h4>
 <p>The <code>Item</code> class contains a <code>getAttributeModifiers</code> method which returns a multimap of modifiers to apply when the item is equipped in the specified slot. We can override this in our own item class.</p>
-<p>From <a href="https://github.com/QuiltMC/developer-wiki/tree/master/wiki/versions/1.19/entity_attributes/src/main/java/org/quiltmc/wiki/entity_attributes/JumpStick.java" target="_blank"><code>JumpStick.java</code></a>:</p>
+<p>From <a href="https://github.com/QuiltMC/developer-wiki/tree/master/wiki/versions/1.19/entity/entity_attributes/src/main/java/org/quiltmc/wiki/entity_attributes/JumpStick.java" target="_blank"><code>JumpStick.java</code></a>:</p>
 <pre><code class="language-java">package org.quiltmc.wiki.entity_attributes;
 
 import com.google.common.collect.ImmutableMultimap;
